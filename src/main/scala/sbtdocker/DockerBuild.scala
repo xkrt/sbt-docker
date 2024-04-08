@@ -198,7 +198,8 @@ object DockerBuild {
 
   private val SuccessfullyBuilt = "^Successfully built ([0-9a-f]+)$".r
   private val SuccessfullyBuiltBuildKit = ".* writing image sha256:([0-9a-f]+) .*\\bdone$".r
-  private val SuccessfullyBuiltBuildx = ".* exporting config sha256:([0-9a-f]+) .*\\bdone$".r
+  private val SuccessfullyBuiltBuildx1 = ".* exporting config sha256:([0-9a-f]+) .*\\bdone$".r
+  private val SuccessfullyBuiltBuildx2 = ".* naming to .*sha256:([0-9a-f]+) .*\\bdone$".r
   private val SuccessfullyBuiltPodman = "^([0-9a-f]{64})$".r
   private val SuccessfullyBuiltNerdctl = "^Loaded image: .*sha256:([0-9a-f]+)$".r
 
@@ -206,7 +207,8 @@ object DockerBuild {
     lines.collect {
       case SuccessfullyBuilt(id) => ImageId(id)
       case SuccessfullyBuiltBuildKit(id) => ImageId(id)
-      case SuccessfullyBuiltBuildx(id) => ImageId(id)
+      case SuccessfullyBuiltBuildx1(id) => ImageId(id)
+      case SuccessfullyBuiltBuildx2(id) => ImageId(id)
       case SuccessfullyBuiltPodman(id) => ImageId(id)
       case SuccessfullyBuiltNerdctl(id) => ImageId(id)
     }.lastOption
